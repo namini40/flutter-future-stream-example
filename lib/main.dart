@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:narvanapp/bloc_screen.dart';
 import 'package:narvanapp/future_screen.dart';
 import 'package:narvanapp/stream_screen.dart';
 
@@ -16,7 +17,8 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       // home: const FutureScreen(),
-      home: const StreamScreen(),
+      // home: const StreamScreen(),
+      home: const BlocScreen(),
     );
   }
 }

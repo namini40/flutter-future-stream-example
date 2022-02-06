@@ -13,6 +13,8 @@ class StreamScreen extends StatefulWidget {
 class _StreamScreenState extends State<StreamScreen> {
   final StreamController<int> streamController = StreamController();
   late Sink<int> sink;
+  late StreamSubscription<int> subscription;
+
 
   int num = 0;
 
@@ -20,6 +22,15 @@ class _StreamScreenState extends State<StreamScreen> {
   void initState() {
     super.initState();
     sink = streamController.sink;
+    subscription = streamController.stream.listen((event) {
+        num  = event;
+        setState(() {
+
+        });
+    });
+
+
+
     sink.add(num);
   }
 
@@ -34,18 +45,19 @@ class _StreamScreenState extends State<StreamScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            StreamBuilder<int>(
-              stream: streamController.stream,
-              builder: (context, snapshot) {
-                print(snapshot);
-                if(snapshot.connectionState == ConnectionState.active){
-                  num = snapshot.data!;
-                  return Text('$num');
-                }else{
-                  return Text('No Data');
-                }
-              },
-            ),
+            // StreamBuilder<int>(
+            //   stream: streamController.stream,
+            //   builder: (context, snapshot) {
+            //     print(snapshot);
+            //     if(snapshot.connectionState == ConnectionState.active){
+            //       num = snapshot.data!;
+            //       return Text('$num');
+            //     }else{
+            //       return Text('No Data');
+            //     }
+            //   },
+            // ),
+            Text('$num'),
             ElevatedButton(onPressed: add, child: Text('Add')),
             ElevatedButton(onPressed: sub, child: Text('Sub')),
           ],
@@ -61,6 +73,14 @@ class _StreamScreenState extends State<StreamScreen> {
 
   sub(){
     sink.add(num-1);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    streamController.close();
+    sink.close();
+    subscription.cancel();
   }
 
 }
