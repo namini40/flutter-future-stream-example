@@ -17,8 +17,8 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       // home: const FutureScreen(),
-      // home: const StreamScreen(),
-      home: const BlocScreen(),
+      home: const StreamScreen(),
+      // home: const BlocScreen(),
     );
   }
 }
